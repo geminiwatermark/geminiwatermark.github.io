@@ -119,6 +119,19 @@ p { margin: 0 0 1em; color: #334155; }
 }
 .hero h1 { text-align: center; }
 .hero-sub { text-align: center; color: var(--muted); font-size: 1.05rem; margin-bottom: 12px; }
+.share-btns { display: flex; gap: 8px; justify-content: center; margin: 14px 0 16px; }
+.share-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #f1f4f9; color: #475569;
+  transition: background .2s, color .2s, transform .15s;
+  text-decoration: none;
+}
+.share-btn:hover { transform: translateY(-2px); }
+.share-btn:nth-child(1):hover { background: #1877f2; color: #fff; }
+.share-btn:nth-child(2):hover { background: #000; color: #fff; }
+.share-btn:nth-child(3):hover { background: #0a66c2; color: #fff; }
+.share-btn:nth-child(4):hover { background: #25d366; color: #fff; }
 .hero-url { text-align: center; margin: 0 0 28px; }
 .hero-url a {
   display: inline-block; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
@@ -539,6 +552,9 @@ p { margin: 0 0 1em; color: #334155; }
 @media (max-width: 480px) {
   .container { padding: 0 14px; }
   .hero-sub { font-size: 0.95rem; }
+  .share-btns { gap: 6px; margin: 10px 0 14px; }
+  .share-btn { width: 32px; height: 32px; }
+  .share-btn svg { width: 15px; height: 15px; }
   .tool-card { padding: 12px; border-radius: 16px; }
   .dropzone { padding: 22px 12px; }
   .dz-icon { width: 36px; height: 36px; }
