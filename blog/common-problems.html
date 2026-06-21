@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Problems While Removing Gemini Watermarks and Their Solutions - Gemini Watermark Remover</title>
+  <meta name="description" content="Troubleshooting guide for common Gemini watermark removal issues: blurry images, detection problems, upload errors, and more." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+  </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.5 9 22 12 14.5 15 12 22 9.5 15 2 12 9.5 9z"/></svg>
+        </span>
+        <span class="logo-text">Gemini Watermark Remover</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../blog.html" class="active">Blog</a>
+        <a href="../faq.html">FAQ</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../faq.html">FAQ</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="article">
+      <div class="container narrow">
+        <p class="blog-hero-label" style="margin-bottom:16px">Troubleshooting</p>
+        <h1>Common Problems While Removing Gemini Watermarks and Their Solutions</h1>
+        <div class="article-meta">
+          <span>June 22, 2026</span>
+          <span class="dot"></span>
+          <span>5 min read</span>
+        </div>
+
+        <p>While our <a href="../index.html" style="color:var(--brand);text-decoration:underline">Gemini Watermark Remover</a> is designed to be simple and reliable, you may occasionally encounter issues. This guide covers the most common problems and how to solve them.</p>
+
+        <h2>1. Blurry or Low-Quality Result</h2>
+        <p><strong>Problem:</strong> The processed image appears blurry or has visible artifacts where the watermark was.</p>
+        <p><strong>Solution:</strong> This usually happens with heavily compressed or low-resolution images. For best results, use the highest quality version of your image. PNG files with minimal compression produce the cleanest output. If the image has been heavily resized or recompressed, the watermark may blend into the background in ways that are harder to reverse.</p>
+
+        <h2>2. Watermark Not Fully Removed</h2>
+        <p><strong>Problem:</strong> Traces of the watermark remain after processing.</p>
+        <p><strong>Solution:</strong> The tool detects watermarks based on their expected position and size. If your image has been cropped or resized, the watermark may appear in an unexpected location. Try using the original uncropped image. Also ensure the watermark is the standard Gemini logo — heavily modified or overlaid images may not process correctly.</p>
+
+        <h2>3. Large File Upload Errors</h2>
+        <p><strong>Problem:</strong> The tool does not accept your file or shows an upload error.</p>
+        <p><strong>Solution:</strong> The tool supports files up to 20MB. If your file exceeds this limit, try compressing it first using an image optimization tool. Also check that your file is in a supported format (PNG, JPG, or WebP). Unsupported formats or corrupted files will be rejected.</p>
+
+        <h2>4. Download Problems</h2>
+        <p><strong>Problem:</strong> The download button does not work or the file does not save.</p>
+        <p><strong>Solution:</strong> This is typically a browser permissions issue. Make sure your browser allows file downloads. Try using a different browser if the problem persists. In some cases, clearing your browser cache can resolve the issue.</p>
+
+        <h2>5. Mobile Compatibility Issues</h2>
+        <p><strong>Problem:</strong> The tool does not work properly on a phone or tablet.</p>
+        <p><strong>Solution:</strong> The tool is designed to work on modern mobile browsers. If you are experiencing issues, try using Chrome or Safari on iOS/Android. Ensure your browser is updated to the latest version. For the best experience, use landscape orientation when uploading larger images.</p>
+
+        <h2>6. Engine Fails to Load</h2>
+        <p><strong>Problem:</strong> The tool shows "Engine failed to load" or "Loading engine..." indefinitely.</p>
+        <p><strong>Solution:</strong> The watermark removal engine uses reference images loaded as data URIs. If these fail to load, try refreshing the page. A stable internet connection is required for the initial page load. If the problem persists, try disabling browser extensions that might block resource loading.</p>
+
+        <h2>Best Practices for High-Quality Output</h2>
+        <ul>
+          <li>Use original, uncropped images whenever possible</li>
+          <li>Prefer PNG format for the best quality</li>
+          <li>Ensure images are at least 500px on the shortest side</li>
+          <li>Avoid heavily compressed or re-encoded images</li>
+          <li>Use a modern, updated web browser</li>
+          <li>Process one image at a time for best results</li>
+        </ul>
+
+        <div class="highlight">
+          <p><strong>Still having trouble?</strong> Contact us and we will help you resolve the issue as quickly as possible.</p>
+        </div>
+
+        <a href="../contact.html" class="btn primary">Get Help &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="../privacy-policy.html">Privacy Policy</a>
+        <a href="../disclaimer.html">Disclaimer</a>
+        <a href="../faq.html">FAQ</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <p class="copy">&copy; 2026 <a href="https://geminiwatermark.github.io/" class="footer-url">geminiwatermark.github.io</a> &middot; All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

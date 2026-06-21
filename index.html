@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Online Gemini Watermark Removal Tool</title>
+  <meta name="description" content="Free, fast, and private gemini watermark removal. Clean your own AI-generated images directly in your browser." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gemini Watermark Remover",
+    "url": "https://geminiwatermark.github.io",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "applicationCategory": "Multimedia",
+    "description": "Free online tool to remove Gemini watermarks from AI-generated images directly in your browser. No uploads, no account needed.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Browser-based processing",
+      "No account required",
+      "Batch image processing",
+      "PNG, JPG, WebP support",
+      "Free to use"
+    ],
+    "screenshot": "https://geminiwatermark.github.io/images/gemini-clean.webp"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Remove a Gemini Watermark",
+    "description": "Steps to remove the Gemini watermark from your AI-generated images using our free online tool.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Upload Your Image",
+        "text": "Select or drag and drop your watermarked image into the upload area."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Automatic Processing",
+        "text": "The browser-based engine recovers the original pixels with inverse alpha compositing against the known Gemini watermark mask."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Download Clean Image",
+        "text": "Preview the result and download the cleaned image directly to your device."
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+  </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.5 9 22 12 14.5 15 12 22 9.5 15 2 12 9.5 9z"/></svg>
+        </span>
+        <span class="logo-text">Gemini Watermark Remover</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>Remove Gemini Watermarks Instantly</h1>
+        <p class="hero-sub">Free, fast, and private gemini watermark removal.</p>
+        <p class="hero-url"><a href="https://geminiwatermark.github.io/">geminiwatermark.github.io</a></p>
+
+        <div class="tool-card" id="toolCard">
+          <label for="fileInput" class="dropzone" id="dropzone">
+            <svg class="dz-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <div class="dz-title">Click to select or drag images here</div>
+            <div class="dz-sub">Supports JPG, PNG, WebP — up to 20MB each</div>
+            <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" multiple hidden />
+          </label>
+
+          <div class="previews" id="previews" hidden>
+            <div class="preview">
+              <h3>Original Preview</h3>
+              <div class="preview-box">
+                <img id="originalImg" alt="Original" />
+              </div>
+            </div>
+            <div class="preview">
+              <h3>Processed Result</h3>
+              <div class="preview-box">
+                <div class="loader" id="resultLoader" hidden>
+                  <div class="spinner"></div>
+                  <div class="loader-text">Processing image…</div>
+                </div>
+                <canvas id="processedCanvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls" id="controls" hidden>
+            <div class="control-row">
+              <label>Output Format:</label>
+              <div class="seg" id="formatSeg" role="tablist">
+                <button class="seg-btn active" data-format="image/png">PNG</button>
+                <button class="seg-btn" data-format="image/jpeg">JPG</button>
+                <button class="seg-btn" data-format="image/webp">WebP</button>
+              </div>
+            </div>
+            <div class="control-actions">
+              <button class="btn primary" id="downloadBtn">Download</button>
+              <button class="btn ghost" id="resetBtn">Reset / Change Image</button>
+            </div>
+          </div>
+
+          <div class="batch" id="batch" hidden>
+            <div class="batch-head">
+              <span>Progress: <span id="progressText">0/0</span></span>
+              <div class="batch-actions">
+                <button class="chip" data-format="image/png">PNG</button>
+                <button class="chip" data-format="image/jpeg">JPG</button>
+                <button class="chip" data-format="image/webp">WebP</button>
+                <button class="chip primary" id="downloadAll">Download All</button>
+              </div>
+            </div>
+            <ul class="batch-list" id="batchList"></ul>
+          </div>
+
+          <div class="status-line" id="statusText" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Upload Your Image</h3>
+            <p>Select or drag and drop your watermarked image into the upload area above.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Automatic Processing</h3>
+            <p>The browser-based engine recovers the original pixels with inverse alpha compositing against the known Gemini watermark mask.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Download Clean Image</h3>
+            <p>Preview the result and download the clean image directly to your device.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft">
+      <div class="container compare-wrap">
+        <h2 class="section-title">See the Difference</h2>
+        <div class="compare">
+          <div class="compare-side">
+            <span class="badge-soft">Before</span>
+            <div class="compare-box">
+              <img src="images/gemini.webp" alt="Image with Gemini watermark" />
+            </div>
+          </div>
+          <div class="compare-vs">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+          <div class="compare-side">
+            <span class="badge-soft alt">After</span>
+            <div class="compare-box">
+              <img src="images/gemini-clean.webp" alt="Cleaned image after watermark removal" />
+            </div>
+          </div>
+        </div>
+        <p class="compare-cap">Watch the Gemini watermark disappear completely</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <h2 class="section-title">Why Choose This Tool?</h2>
+        <div class="features">
+          <div class="feature">
+            <div class="feature-ico">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h4>100% Browser-Based</h4>
+            <p>Your images never leave your device. All processing happens locally using JavaScript — no uploads, no servers, no third parties. <a href="about.html" class="accent-link">Learn more</a>.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-ico">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h4>Privacy First</h4>
+            <p>No account, no sign-up, no tracking. Your files stay yours. We do not store, copy, or transmit any image data. See our <a href="privacy-policy.html" class="accent-link">Privacy Policy</a>.</p>
+          </div>
+          <div class="feature">
+            <div class="feature-ico">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h4>Fast & Free</h4>
+            <p>No subscriptions, no hidden charges. Process unlimited images for free. Works on any device with a modern browser. Read our <a href="faq.html" class="accent-link">FAQ</a> for details.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft">
+      <div class="container">
+        <h2 class="section-title">What Users Say</h2>
+        <div class="audience">
+          <div class="audience-card">
+            <span class="audience-ico">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <h4>Bloggers</h4>
+            <p>"I use this tool daily to clean up AI images for my blog posts. Works in seconds and no account needed." — <a href="blog/how-to-remove-gemini-watermark.html" class="accent-link">Read our guide</a></p>
+          </div>
+          <div class="audience-card">
+            <span class="audience-ico">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </span>
+            <h4>Designers</h4>
+            <p>Perfect for mocking up layouts without Gemini watermark distractions. Saves hours compared to manual removal in Photoshop.</p>
+          </div>
+          <div class="audience-card">
+            <span class="audience-ico">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </span>
+            <h4>Content Creators</h4>
+            <p>Clean up social media visuals and thumbnails quickly. Supports batch processing for multiple images at once.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">From the Blog</h2>
+        <div class="posts">
+          <article class="post">
+            <h4><a href="blog/what-is-gemini-watermark.html" class="post-link">What Is the Gemini Watermark?</a></h4>
+            <p>Learn about Google's AI transparency watermark and how it's applied to generated images.</p>
+            <a href="blog/what-is-gemini-watermark.html" class="post-more">Read more &rarr;</a>
+          </article>
+          <article class="post">
+            <h4><a href="blog/how-to-remove-gemini-watermark.html" class="post-link">How to Remove the Gemini Watermark</a></h4>
+            <p>Step-by-step instructions for cleaning your own AI images quickly and easily.</p>
+            <a href="blog/how-to-remove-gemini-watermark.html" class="post-more">Read more &rarr;</a>
+          </article>
+          <article class="post">
+            <h4><a href="blog/remove-without-photoshop.html" class="post-link">Remove Without Photoshop</a></h4>
+            <p>No design software? No problem. Remove watermarks entirely in your browser.</p>
+            <a href="blog/remove-without-photoshop.html" class="post-more">Read more &rarr;</a>
+          </article>
+          <article class="post">
+            <h4><a href="blog/ai-watermark-remover.html" class="post-link">AI Watermark Remover Tools</a></h4>
+            <p>Comparison of the best tools for removing AI-generated watermarks online.</p>
+            <a href="blog/ai-watermark-remover.html" class="post-more">Read more &rarr;</a>
+          </article>
+          <article class="post">
+            <h4><a href="blog/common-problems.html" class="post-link">Common Problems & Solutions</a></h4>
+            <p>Troubleshooting tips for watermark removal issues and edge cases.</p>
+            <a href="blog/common-problems.html" class="post-more">Read more &rarr;</a>
+          </article>
+        </div>
+        <div class="center-btn"><a href="blog.html" class="btn ghost">View All Articles &rarr;</a></div>
+      </div>
+    </section>
+
+    <section class="section soft">
+      <div class="container narrow text-block">
+        <h2 class="section-title">What Is the Gemini Watermark?</h2>
+        <p>The Gemini watermark is a semi-transparent label added by <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener" class="accent-link">Google's Gemini AI</a> to images it generates. It typically appears in the bottom-right corner as a small icon or text marking the image as AI-generated. This is part of Google's transparency efforts to help viewers identify AI content.</p>
+        <p>While the watermark serves an important purpose, many users need clean versions of their own AI-generated images for drafts, mockups, presentations, and personal projects. Our tool helps you do this responsibly.</p>
+        <div class="center-btn"><a href="blog/what-is-gemini-watermark.html" class="accent-link">Learn more about the Gemini watermark &rarr;</a></div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container narrow center">
+        <h2>Ready to Clean Your Image?</h2>
+        <p>Upload your own image, preview the result, and download it in seconds. Free, private, and browser-based.</p>
+        <a href="index.html#home" class="btn primary lg">Start Now &rarr;</a>
+        <p class="cta-sub"><a href="https://geminiwatermark.github.io/" class="footer-url">geminiwatermark.github.io</a> &middot; No account required &middot; Works on all devices</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="disclaimer.html">Disclaimer</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <p class="copy">© 2026 <a href="https://geminiwatermark.github.io/" class="footer-url">geminiwatermark.github.io</a> &middot; All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
